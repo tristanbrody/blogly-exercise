@@ -17,6 +17,9 @@ User Page: {{user.first_name}}
         </div>
     </div>
     <hr>
+    <form action="/users/{{user.id}}/posts/new">
+        <button class="btn btn-sm btn-primary mb-3">Add Post</button>
+    </form>
     <form action=" ..">
         <button class="btn btn-sm btn-info">Back to users page</button>
     </form>

@@ -2,7 +2,7 @@
 
 from flask import Flask, request, redirect, render_template, url_for
 from flask_debugtoolbar import DebugToolbarExtension 
-from models import db, User, connect_db
+from models import db, User, Post, connect_db
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///blogly'
@@ -66,5 +66,46 @@ def handle_delete_user(userid):
     User.query.filter_by(id=userid).delete()
     db.session.commit()
     return redirect(url_for('list_users'))
+
+
+
+@app.route('/users/<userid>/posts/new')
+def show_new_post_form(userid):
+    """Show form to add a post for that user"""
+    user = User.query.get(userid)
+    return render_template('new_post.html', user=user)
+
+@app.route('/users/<userid>/posts/new', methods=["POST"])
+def handle_new_post(userid):
+    """Add post and redirect to the user detail page"""
+    user = User.query.get(userid)
+    post = Post(title=request.form['post_title'], content=request.form['post_content'], posted_by=userid)
+    db.session.add(post)
+    db.session.commit()
+    return redirect(url_for('show_user_edit_page', user=user))
+
+@app.route('/posts/<postid>')
+def show_post(postid):
+    """Show a post"""
+    post = Post.query.get(postid)
+    return render_template('new_post', post=post)
+
+@app.route('/posts/<postid>/edit')
+def show_edit_post_form(postid):
+    """Show form to edit a post"""
+    post = Post.query.get(postid)
+    return render_template('edit_post', post=post)
+
+@app.route('/posts/<postid>/edit', methods=['POST'])
+def handle_edit_post(postid):
+    """Handle editing of a post - redirect back to the post view"""
+    post = Post.query.get(postid)
+    return render_template('show_post', post=post)
+
+@app.route('/posts/<postid>/delete')
+def handle_delete_post(postid):
+    #delete post
+    return ''
+
 
 
