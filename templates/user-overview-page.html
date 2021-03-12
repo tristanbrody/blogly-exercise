@@ -34,6 +34,9 @@ User Page: {{user.first_name}}
             <h4 class="card-title">{{post.title}}</h4>
             <p class="card-subtitle text-muted">Posted on {{post.created_at}}</p>
             <p>{{post.content}}</p>
+            <form action="../posts/{{post.id}}/delete" methods='POST'>
+                <button class="btn-xs btn-danger">Delete</button>
+            </form>
         </div>
     </div>
     {% endfor %}

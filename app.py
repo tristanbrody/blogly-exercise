@@ -1,7 +1,8 @@
 """Blogly application."""
 
 from flask import Flask, request, redirect, render_template, url_for
-from flask_debugtoolbar import DebugToolbarExtension 
+from flask_debugtoolbar import DebugToolbarExtension
+from sqlalchemy import desc 
 from models import db, User, Post, connect_db
 from seed import seed
 
@@ -23,7 +24,8 @@ def home():
 @app.route('/users')
 def list_users():
     users = User.query.all()
-    return render_template('users.html', users=users)
+    posts = Post.query.order_by(desc(Post.created_at))[:5]
+    return render_template('users.html', users=users, posts=posts)
 
 @app.route('/users/new')
 def show_add_user():
@@ -80,7 +82,6 @@ def show_new_post_form(userid):
 @app.route('/users/<userid>/posts/new', methods=["POST"])
 def handle_new_post(userid):
     """Add post and redirect to the user detail page"""
-    user = User.query.get(userid)
     post = Post(title=request.form['post_title'], content=request.form['post_content'], posted_by=userid)
     db.session.add(post)
     db.session.commit()
@@ -106,8 +107,11 @@ def handle_edit_post(postid):
 
 @app.route('/posts/<postid>/delete')
 def handle_delete_post(postid):
-    #delete post
-    return ''
-
-
+    #grab user who created post, delete post, then redirect to user page
+    post = Post.query.get(postid)
+    userid = post.posted_by
+    db.session.delete(post)
+    db.session.commit() 
+    return redirect(url_for('show_user_page', userid=userid))
+    
 

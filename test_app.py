@@ -17,4 +17,4 @@ class RoutingTestCase(TestCase):
             response = self.app.get(url_for('home'), follow_redirects=True)
             self.assertEqual(response.location, 'http://127.0.0.1:5000/users')
     
-    def test_new_users_page(self):
+    # def test_new_users_page(self):

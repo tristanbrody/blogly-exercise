@@ -3,19 +3,34 @@
 All Users
 {% endblock %}
 {% block content %}
-<h2>Users</h2>
-<ul id="user-ul">
-    {% if users %}
-    {% for user in users %}
-    <li>
-        <a href='./users/{{user.id}}'>
-            {{user.first_name}}</a>
-    </li>
+<div class="container">
+    <h1 class="mb-2">Most Recent Posts
+        {% if posts %}
+        {% for post in posts %}
+        <ul class="mt-3">
+            <li style="font-size: 15px">{{post.content}}</li>
+        </ul>
+    </h1>
     {% endfor %}
+    {% else %}
+    <p style="font-size: 20px"> How embarrassing... There are no posts</p>
+    <img src="https://images.unsplash.com/photo-1603792907191-89e55f70099a?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
+        class="img-responsive" style="max-width: 300px" alt="Shame">
     {% endif %}
-</ul>
+    <h2>Users</h2>
+    <ul id="user-ul">
+        {% if users %}
+        {% for user in users %}
+        <li>
+            <a href='./users/{{user.id}}'>
+                {{user.first_name}}</a>
+        </li>
+        {% endfor %}
+        {% endif %}
+    </ul>
 
-<form action="/users/new">
-    <button class="btn btn-primary" type="submit">Add User</button>
-</form>
-{% endblock %}
+    <form action="/users/new">
+        <button class="btn btn-primary" type="submit">Add User</button>
+    </form>
+    {% endblock %}
+</div>
