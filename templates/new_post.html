@@ -21,5 +21,15 @@
             <button class="btn btn-sm btn-danger" formaction="/users/{{user.id}}">Cancel</button>
             <button class="btn btn-primary ml-3">Submit</button>
         </div>
+        <fieldset>
+            {% for tag in tags %}
+            <div>
+                <input type="checkbox" id="{{ tag.id }}" name="tag_checkbox" value="{{ tag.id }}">
+                <label for="{{tag.id}}">{{tag.name}}</label>
+            </div>
+        </fieldset>
+    </form>
+    {% endfor %}
+</div>
 </div>
 {% endblock %}

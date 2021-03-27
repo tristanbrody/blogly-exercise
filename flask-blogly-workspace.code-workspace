@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "..\\..\\sql-alchemy\\sqla-relationships-demo"
+		}
+	],
+	"settings": {}
+}

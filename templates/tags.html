@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Tags{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <h2>All Tags</h2>
+    {% for tag in tags %}
+    <ul>
+        <li><a href="/tags/{{tag.id}}/edit">{{tag.name}}</a></li>
+    </ul>
+    {% endfor %}
+    <form action="/tags/new">
+        <button class="btn btn-primary btn-sm">Add New Tag</button>
+    </form>
+    <form action="..">
+        <button class="btn btn-danger btn-sm mt-3">Cancel</button>
+    </form>
+</div>
+{% endblock %}
